@@ -14,4 +14,10 @@ read_featureCounts = function(filename, n_samples) {
     return
 }
 
+read_mmquant = function(filename, n_samples) {
+  read_tsv(filename, comment = '#', progress = FALSE, col_types = paste(c('c', array('n', n_samples)), collapse = '')) %>%
+    rename_at(vars(2:ncol(.)), paths_to_id) %>%
+    rename(gene_id = Gene) %>%
+    return
+}
 
