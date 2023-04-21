@@ -225,10 +225,10 @@ get_read_coordinates = function(reads, lower, upper) {
     pivot_wider(names_from = read, values_from = c(strand, pos, qwidth)) %>%
     mutate(
       colour = ifelse(strand_read1 == '+', '#d6604d7f', '#4393c37f'),
-      x1_read1 = scale_coordinates(pos_read1, X_LOWER, X_UPPER),
-      x2_read1 = scale_coordinates(pos_read1 + qwidth_read1, X_LOWER, X_UPPER),
-      x1_read2 = scale_coordinates(pos_read2, X_LOWER, X_UPPER),
-      x2_read2 = scale_coordinates(pos_read2 + qwidth_read2, X_LOWER, X_UPPER),
+      x1_read1 = scale_coordinates(pos_read1, lower, upper),
+      x2_read1 = scale_coordinates(pos_read1 + qwidth_read1, lower, upper),
+      x1_read2 = scale_coordinates(pos_read2, lower, upper),
+      x2_read2 = scale_coordinates(pos_read2 + qwidth_read2, lower, upper),
       x1 = pmin(x1_read1, x1_read2, na.rm = TRUE),
       x2 = pmax(x2_read1, x2_read2, na.rm = TRUE),
     ) %>%
@@ -257,9 +257,9 @@ get_features_in_range = function(features, chromosome, lower, upper) {
     add_feature_heights %>%
     ungroup %>%
     mutate(
-      x1 = scale_coordinates(start, X_LOWER, X_UPPER),
+      x1 = scale_coordinates(start, lower, upper),
       y1 = scale_coordinates(height - 1, 0, max(height)),
-      x2 = scale_coordinates(end, X_LOWER, X_UPPER),
+      x2 = scale_coordinates(end, lower, upper),
       y2 = scale_coordinates(height, 0, max(height)),
     ) %>%
     group_by(transcript_id) %>%
